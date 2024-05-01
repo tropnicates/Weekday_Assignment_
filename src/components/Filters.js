@@ -24,7 +24,6 @@ const Filters = () => {
     setCompany('');
     setLocation('');
     setRemote(false);
-    // Dispatch action to reset filters if needed
   };
 
   return (

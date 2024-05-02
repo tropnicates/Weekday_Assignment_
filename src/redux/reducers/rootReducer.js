@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import jobReducer from './reducers/jobReducer';
+import jobReducer from './jobReducer';
 import filterReducer from './filterReducers';
 
 const rootReducer = combineReducers({

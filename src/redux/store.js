@@ -1,7 +1,8 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import *as ReduxThunk from 'redux-thunk';
+import { combineReducers, applyMiddleware } from 'redux';
+import { thunk as ReduxThunk} from 'redux-thunk';
 import jobReducer from './reducers/jobReducer';
 import filterReducer from './reducers/filterReducers';
+import { legacy_createStore as createStore } from 'redux';
 
 const rootReducer = combineReducers({
   jobs: jobReducer,
@@ -14,3 +15,4 @@ const store = createStore(
 );
 
 export default store;
+

@@ -1,74 +1,46 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { applyFilter } from '../redux/actions/filterActions';
-
+import React, { useState, useEffect } from "react";
+import "../styles/main.css";
+import Dropdown from "../general/Dropdown";
+import { useDispatch } from "react-redux";
+import { applyFilter } from "../redux/actions/filterActions";
 const Filters = () => {
   const dispatch = useDispatch();
-  const [experience, setExperience] = useState('');
-  const [company, setCompany] = useState('');
-  const [location, setLocation] = useState('');
-  const [remote, setRemote] = useState(false);
+  const [filters, setFilters] = useState({
+    role: "",
+    numEmployees: "",
+    experience: "",
+    remote: "",
+    minBasePay: "",
+    companyName: "",
+  });
 
-  const handleApplyFilter = () => {
-    const filters = {
-      experience,
-      company,
-      location,
-      remote
-    };
+  useEffect(() => {
     dispatch(applyFilter(filters));
+  }, [filters, dispatch]);
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === "checkbox" ? checked : value;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: inputValue,
+    }));
   };
 
-  const handleResetFilter = () => {
-    setExperience('');
-    setCompany('');
-    setLocation('');
-    setRemote(false);
-  };
+  const handleRole = (res)=>{
+    console.log(res)
+  }
 
   return (
-    <div>
-      <h2>Filters</h2>
-      <div>
-        <label>Experience:</label>
-        <input
-          type="text"
-          value={experience}
-          onChange={(e) => setExperience(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Company:</label>
-        <input
-          type="text"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Location:</label>
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={remote}
-            onChange={(e) => setRemote(e.target.checked)}
-          />
-          Remote
-        </label>
-      </div>
-      <div>
-        <button onClick={handleApplyFilter}>Apply Filters</button>
-        <button onClick={handleResetFilter}>Reset Filters</button>
-      </div>
+    <div style={{width: '100%', display: 'flex', flexWrap: 'wrap', gap: 5}} className="filters">
+      <Dropdown title={"Roles"} data={['Software Developer', 'Backend Developer', 'ios', 'frontend', 'Software Developer', 'Backend Developer', 'ios', 'Software Developer', 'Backend Developer', 'ios']} onSelect={handleRole} />
+      <Dropdown title={"Number of Employees"} data={['1-20', '11-20', '21-50', '51-100', '101-200', '201-500', '500+', ]} onSelect={handleRole} />
+      <Dropdown title={"Experience"} data={['1','2','3','4','5','6','7','8','9','10']} onSelect={handleRole} />
+      <Dropdown title={"Remote"} data={['Remote','Hybrid','In-office']} onSelect={handleRole} />
+      <Dropdown title={"Minimum Base Pay Salary"} data={['0L','10L','20L','30L','40L','50L','60L','70L']} onSelect={handleRole} />
+      <Dropdown title={"Search Company Name"}  data={['Google','Amazon','Flipkart','Facebook','Aws','MAQ']} onSelect={handleRole} />
     </div>
   );
-}
+};
 
 export default Filters;
